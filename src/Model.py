@@ -1,4 +1,4 @@
-from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from Data_Ingestion import fetch
@@ -32,13 +32,13 @@ def data_process(ticker):
     return data
 
 
-def logistic_model(data):
+def Decision_tree(data):
     feature = data[['RSI', 'MACD', 'Volume_diff']]
     target = data['Target']
 
     X_train, X_test, Y_train, Y_test = train_test_split(feature,target, test_size=0.2, shuffle=False)
 
-    model = LogisticRegression()
+    model = DecisionTreeClassifier(max_depth=2, random_state=42)
     model.fit(X_train,Y_train)
 
     prediction = model.predict(X_test)
@@ -50,7 +50,7 @@ def logistic_model(data):
 if __name__ == "__main__":
     ticker = "UPL.NS"
     data = data_process(ticker)
-    model, accuracy, feature = logistic_model(data)
+    model, accuracy, feature = Decision_tree(data)
 
     print(f"Accuracy:{accuracy:.2%}")
     print("Predictions:")
