@@ -1,4 +1,5 @@
 from Data_Ingestion import fetch
+import ta
 
 def RSI(data, window=14):
     delta = data["Close"].diff()
@@ -35,3 +36,6 @@ if __name__ == "__main__":
     signals = generate_signal(data)
 
     print(signals[['Close', 'RSI', '20DMA', '50DMA', 'signal']].tail())
+    
+
+ 

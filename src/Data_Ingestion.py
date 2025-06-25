@@ -1,20 +1,23 @@
 import pandas as pd
 import yfinance as yf
 import os
-from datetime import datetime, timedelta
 
 stocks = ["RELIANCE.NS", "HDFCBANK.NS", "INFY.NS"]
 
 def fetch(ticker, csv=False):
-    try:
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=180)
+    try:        
 
-        data = yf.download(ticker, start=start_date, end=end_date, period="6mo", auto_adjust=True)
+        data = yf.download(ticker, period="6mo", auto_adjust=True)
+        
+        if isinstance(data.columns, pd.MultiIndex):
+            data.columns = data.columns.get_level_values(0)
+
+        data.columns.name = None
+
 
         if csv:
             os.makedirs("data", exist_ok=True)            
-            data.to_csv(f"data/{ticker.replace('.','_')}_{end_date.date()}.csv")
+            data.to_csv(f"data/{ticker.replace('.','_')}.csv")
         
         return data
 
