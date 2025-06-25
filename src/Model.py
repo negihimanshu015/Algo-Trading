@@ -45,13 +45,3 @@ def Decision_tree(data):
     accuracy = accuracy_score(Y_test, prediction)
 
     return model, accuracy, feature
-
-
-if __name__ == "__main__":
-    ticker = "UPL.NS"
-    data = data_process(ticker)
-    model, accuracy, feature = Decision_tree(data)
-
-    print(f"Accuracy:{accuracy:.2%}")
-    print("Predictions:")
-    print(pd.DataFrame({'Actual': data['Target'][-5:], 'Predicted': model.predict(feature[-5:])}))

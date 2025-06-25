@@ -23,8 +23,3 @@ def fetch(ticker, csv=False):
 
     except Exception as e:
         print(f"Fetching error{e}")
-
-if __name__ == "__main__":
-    for stock in stocks:
-        df = fetch(stock, csv=True)
-        print(f"Downloaded {stock} | {len(df)} records")

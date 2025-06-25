@@ -1,7 +1,5 @@
-import pandas as pd
 from Data_Ingestion import fetch
 from Strategy import generate_signal
-
 
 def backtest(ticker, initial_cash=10000):
     data = fetch(ticker)
@@ -19,11 +17,11 @@ def backtest(ticker, initial_cash=10000):
             buy_price = price
             shares = cash // price
             cash = cash - shares * price
-            trades.append({'Date': date.date(), 'Action': "BUY", 'Price': price, 'Shares': shares})
+            trades.append({'Date': str(date.date()), 'Action': "BUY", 'Price': price, 'Shares': shares})
 
         elif shares > 0 and (row['20DMA'] < row['50DMA']):
             cash = cash + shares * price
-            trades.append({'Date': date.date(), 'Action': "SELL", 'Price': price, 'Shares': shares, 'Profit': (price - buy_price) * shares })
+            trades.append({'Date': str(date.date()), 'Action': "SELL", 'Price': price, 'Shares': shares, 'Profit': (price - buy_price) * shares })
             shares = 0
 
     return trades
@@ -65,8 +63,5 @@ def metric(trades, initial_cash=10000):
             
          
         
-if __name__ == "__main__":    
-    trades = backtest("UPL.NS")
-    print(metric(trades))  
-    
+
 

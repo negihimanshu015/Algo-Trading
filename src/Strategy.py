@@ -1,5 +1,3 @@
-from Data_Ingestion import fetch
-import pandas as pd
 import numpy as np
 
 def RSI(data, window=14):
@@ -42,11 +40,6 @@ def generate_signal(data):
 
     return data
 
-if __name__ == "__main__":
-    data = fetch("HDFCBANK.NS")
-    signals = generate_signal(data)
-
-    print(signals[['Close', 'RSI', '20DMA', '50DMA', 'signal']].tail())
     
 
  
