@@ -1,5 +1,6 @@
 from Data_Ingestion import fetch
-import ta
+import pandas as pd
+import numpy as np
 
 def RSI(data, window=14):
     delta = data["Close"].diff()
@@ -13,6 +14,16 @@ def RSI(data, window=14):
     scale = 100 - (100/(1 + strength))
 
     return scale
+
+def MACD(data):
+    exp1 = data['Close'].ewm(span=12, adjust=False).mean()
+    exp2 = data['Close'].ewm(span=26, adjust=False).mean()
+
+    macd = exp1 - exp2.replace([np.inf, -np.inf], 0)
+
+    signal_line = macd.ewm(span=9, adjust=False).mean()
+    return macd, signal_line
+    
 
 def moving_averages(data):
     data['20DMA'] = data['Close'].rolling(20).mean()
