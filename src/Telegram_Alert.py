@@ -1,6 +1,9 @@
 import requests
 from dotenv import load_dotenv
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 load_dotenv()
 token = os.getenv("TELEGRAM_TOKEN")
@@ -13,5 +16,7 @@ def Telegram_Alert(message):
 
         response = requests.post(url, data)
         response.raise_for_status()
+        logging.info("Message sent successfully.")
+
     except Exception as e:
-        print(f"Error Occured: {e}")
+        logging.error(f"Message failed: {e}")

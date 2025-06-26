@@ -1,6 +1,25 @@
 import numpy as np
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 def RSI(data, window=14):
+
+    """
+    Calculates RSI value.
+
+    Parameters
+    ----------
+    data : dataframe        
+
+    window : int
+        period for RSI calculations.
+
+    Returns
+    -------
+        series (RSI value)                
+    """
+
     delta = data["Close"].diff()
     gain = delta.where(delta > 0, 0)
     loss = -delta.where(delta < 0, 0)
@@ -14,6 +33,19 @@ def RSI(data, window=14):
     return scale
 
 def MACD(data):
+
+    """
+    Calculates macd & singal line.
+
+    Parameters
+    ----------
+    data : dataframe  
+
+    Returns
+    -------
+        series (MACD, Signal line)                
+    """
+
     exp1 = data['Close'].ewm(span=12, adjust=False).mean()
     exp2 = data['Close'].ewm(span=26, adjust=False).mean()
 
@@ -23,13 +55,28 @@ def MACD(data):
     return macd, signal_line
     
 
-def moving_averages(data):
+def moving_averages(data):   
+
     data['20DMA'] = data['Close'].rolling(20).mean()
     data['50DMA'] = data['Close'].rolling(50).mean()
 
     return data
 
 def generate_signal(data):
+
+    """
+    Genearates buy signal based on the strategy.
+
+    Parameters
+    ----------
+    data : dataframe   
+
+    Returns
+    -------
+        Dataframe (updated dataframe with signal column.)               
+    """
+
+    logging.info("Generating signals.")
     data["RSI"] = RSI(data)
     data = moving_averages(data)
 

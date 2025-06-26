@@ -4,8 +4,24 @@ from sklearn.metrics import accuracy_score
 from Data_Ingestion import fetch
 from Strategy import RSI, MACD
 import numpy as np
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 def data_process(ticker):
+    """
+    Preprocesses the data for machine learning.
+
+    Parameters
+    ----------
+    ticker: str
+        Stock ticker symbol.   
+
+    Returns
+    -------
+        Dataframe (updated dataframe with target column.)
+    """
+   
     data = fetch(ticker)
     data['RSI'] = RSI(data).clip(0,100)
     data['MACD'], data['Signal_Line'] = MACD(data)
@@ -32,6 +48,21 @@ def data_process(ticker):
 
 
 def Decision_tree(data):
+
+    """
+    Parameters
+    ----------
+    data: Dataframe
+        (From data_preprocess() function.)   
+
+    Returns
+    -------
+        model: DecisionTreeClassifier,
+        accuracy: float,
+        feature: DataFrame
+    """  
+
+    logging.info("Machine Learning (Decision-Tree).")
     feature = data[['RSI', 'MACD', 'Volume_diff']]
     target = data['Target']
 
@@ -42,5 +73,6 @@ def Decision_tree(data):
 
     prediction = model.predict(X_test)
     accuracy = accuracy_score(Y_test, prediction)
-
+    
+    logging.info(f"Decision Tree accuracy:{accuracy}.2%")
     return model, accuracy, feature

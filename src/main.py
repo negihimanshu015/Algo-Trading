@@ -1,13 +1,15 @@
 from Data_Ingestion import fetch
-from Strategy import generate_signal
 from Backtest import backtest, metric
 from log import connect, log_trades, summary
 import pandas as pd
 from Telegram_Alert import Telegram_Alert
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 def algo(ticker):
-    data = fetch(ticker)
-    signals = generate_signal(data)
+    logging.info("Executing Algo function.")
+    data = fetch(ticker)    
     trades = backtest(ticker)
     log_summary = metric(trades)
 
