@@ -29,7 +29,12 @@ def backtest(ticker, initial_cash=10000):
 
 def metric(trades, initial_cash=10000):
     if not trades:
-        return "No Trades"
+         return {
+            "Total Trades": 0,
+            "Total Profit": 0,
+            "Return": 0.0,
+            "Winning Ratio": 0.0
+        }
     
     profits = []
 
@@ -56,7 +61,7 @@ def metric(trades, initial_cash=10000):
             "Total Trades": len(trades)//2,
             "Total Profit": total_profit,
             "Return": (total_profit/initial_cash)*100,
-            "Winning Trades": winning_trades           
+            "Winning Ratio": winning_trades           
         }
 
     return metrics 
