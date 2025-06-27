@@ -53,8 +53,8 @@ def log_trades(sheet, trades_df, ticker):
     except:
         ws = sheet.add_worksheet(title=sheet_title, rows=100, cols=10)
 
-    ws.clear()
-    trades_df = trades_df.fillna(0)
+    ws.clear() 
+    trades_df = trades_df.fillna(0) 
     ws.update([trades_df.columns.tolist()] + trades_df.values.tolist())
     logging.info(f"Logged trades to {sheet_title}")
 
@@ -86,7 +86,7 @@ def summary(sheet, summary_dict, ticker):
 
     ws.clear()
     rows=[]
-    for key, value in summary_dict.items():
+    for key, value in summary_dict.items():  #converts dict to list.
         rows.append([key,value])
     ws.update(rows)
     logging.info(f"Logged summary data to {sheet_title}")

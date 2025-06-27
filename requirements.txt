@@ -1,0 +1,8 @@
+pandas
+numpy
+requests
+scikit-learn
+yfinance
+gspread
+oauth2client
+python-dotenv

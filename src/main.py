@@ -1,4 +1,3 @@
-from Data_Ingestion import fetch
 from Backtest import backtest, metric
 from log import connect, log_trades, summary
 import pandas as pd
@@ -8,8 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 def algo(ticker):
-    logging.info("Executing Algo function.")
-    data = fetch(ticker)    
+    logging.info("Executing Algo function.")       
     trades = backtest(ticker)
     log_summary = metric(trades)
 
@@ -22,11 +20,7 @@ def algo(ticker):
 
     sheet = connect(sheet_name, cred_path)
 
-    if trades:
-        log_summary = metric(trades)
-        trades_df = pd.DataFrame(trades)
-
-        sheet = connect(sheet_name, cred_path)
+    if trades:                        
         log_trades(sheet, trades_df, ticker)
         summary(sheet, log_summary, ticker)
     else:

@@ -32,9 +32,9 @@ def backtest(ticker, initial_cash=10000):
     trades =[]
     cash= initial_cash
 
-    for date, row in signal.iterrows():
-        price = row['Close']
+    for date, row in signal.iterrows(): #Iterates over each day.
         
+        price = row['Close']       
 
         if (row['signal'] == 1) and (shares == 0):
             buy_price = price

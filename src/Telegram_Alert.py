@@ -15,7 +15,7 @@ def Telegram_Alert(message):
         data = { 'chat_id': chat_id, 'text': message}
 
         response = requests.post(url, data)
-        response.raise_for_status()
+        response.raise_for_status() # Raises error.
         logging.info("Message sent successfully.")
 
     except Exception as e:

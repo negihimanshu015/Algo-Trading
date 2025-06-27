@@ -25,7 +25,7 @@ def data_process(ticker):
     data = fetch(ticker)
     data['RSI'] = RSI(data).clip(0,100)
     data['MACD'], data['Signal_Line'] = MACD(data)
-    data['Volume_diff'] = data['Volume'].pct_change().replace([np.inf, -np.inf], 0).fillna(0)
+    data['Volume_diff'] = data['Volume'].pct_change().replace([np.inf, -np.inf], 0).fillna(0) # Percentage change in volume.
 
     target = []
 
@@ -41,7 +41,7 @@ def data_process(ticker):
     target.append(0)  # For the last day
     data['Target'] = target
 
-    data.replace([np.inf, -np.inf], np.nan, inplace=True)
+    data.replace([np.inf, -np.inf], np.nan, inplace=True) # Replace inf and -inf.
     data = data.dropna()
 
     return data
@@ -74,5 +74,5 @@ def Decision_tree(data):
     prediction = model.predict(X_test)
     accuracy = accuracy_score(Y_test, prediction)
     
-    logging.info(f"Decision Tree accuracy:{accuracy}.2%")
+    logging.info(f"Decision Tree accuracy:{accuracy:.2%}")
     return model, accuracy, feature

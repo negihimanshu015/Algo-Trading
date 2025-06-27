@@ -27,9 +27,9 @@ def fetch(ticker, csv=False):
 
     try:
         logging.info(f"Fetching data for {ticker}")
-        data = yf.download(ticker, period="6mo", auto_adjust=True)
+        data = yf.download(ticker, period="6mo", auto_adjust=True) #Adjusts stock prices for dividens.
         
-        if isinstance(data.columns, pd.MultiIndex):
+        if isinstance(data.columns, pd.MultiIndex): # Flatten multi index cloumns.
             data.columns = data.columns.get_level_values(0)
 
         data.columns.name = None
